@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig_base.json",
+  "compilerOptions": {
+    "module": "es6",
+    "outDir": "dist",
+    "sourceMap": true,
+    "lib": [
+      "esnext",
+      "webworker",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "./src"
+  ]
+}
