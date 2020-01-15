@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "name": "Aigram Test on KaiOS",
+  "description": "Simple example of Airgram on KaiOS",
+  "type": "web",
+  "launch_path": "/index.html",
+  "icons": {
+    "56": "/assets/icons/kaios_56.png",
+    "112": "/assets/icons/kaios_112.png"
+  },
+  "developer": {
+    "name": "KaiOS Team",
+    "url": "https://www.kaiostech.com"
+  },
+  "locales": {
+    "en-US": {
+      "name": "Aigram Test on KaiOS",
+      "subtitle": "Simple example of Airgram on KaiOS",
+      "description": "Simple example of Airgram on KaiOS"
+    }
+  },
+  "default_locale": "en-US"
+}

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta content="ie=edge" http-equiv="x-ua-compatible">
-  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
   <title>
     <%= htmlWebpackPlugin.options.title %>
@@ -15,8 +15,11 @@
 </head>
 
 <body>
-<h1><%= htmlWebpackPlugin.options.title %></h1>
-<div> Please open browser console.</div>
+  <div id="root">
+    <h1><%= htmlWebpackPlugin.options.title %></h1>
+    <h3>Please also open browser console.</h3>
+    <div id="log"></div>
+  </div>
 </body>
 
 </html>
