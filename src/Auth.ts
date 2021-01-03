@@ -21,7 +21,7 @@ import {
   Ok,
   OkUnion,
   RegisterUserParams,
-  TdProvider,
+  Provider,
   UpdateAuthorizationState
 } from '@airgram/core'
 
@@ -73,26 +73,26 @@ export class Auth {
 
   private invalidPhoneNumbers: Set<string> = new Set()
 
-  public constructor (config: AuthConfig) {
+  public constructor(config: AuthConfig) {
     this.config = config
   }
 
-  public get isAuthorized (): boolean {
+  public get isAuthorized(): boolean {
     return !!(this.authState && this.authState._ === AUTHORIZATION_STATE.authorizationStateReady)
   }
 
-  public get isBot (): boolean {
+  public get isBot(): boolean {
     return 'token' in this.config
   }
 
-  private get airgram (): Instance<any> {
+  private get airgram(): Instance<any> {
     if (!this._airgram) {
       throw new Error('Airgram has not been initialized yet.')
     }
     return this._airgram
   }
 
-  public middleware (): MiddlewareFn<Context> {
+  public middleware(): MiddlewareFn<Context> {
     return Composer.compose([
       (ctx, next) => {
         if (!this._airgram) {
@@ -115,7 +115,7 @@ export class Auth {
     ])
   }
 
-  private async ask (type: keyof AuthConfig): Promise<string> {
+  private async ask(type: keyof AuthConfig): Promise<string> {
     if (!(type in this.config) || !this.config[type]) {
       throw new Error(`The "${type}" option does not specified.`)
     }
@@ -125,7 +125,7 @@ export class Auth {
     return this.config[type] as string
   }
 
-  private async askPhoneNumber (): Promise<string> {
+  private async askPhoneNumber(): Promise<string> {
     return this.ask('phoneNumber')
       .then(async (phoneNumber) => {
         if (!phoneNumber) {
@@ -140,21 +140,21 @@ export class Auth {
       })
   }
 
-  private async checkAuthenticationPassword (): Promise<ApiResponse<CheckAuthenticationPasswordParams, Ok>> {
+  private async checkAuthenticationPassword(): Promise<ApiResponse<CheckAuthenticationPasswordParams, Ok>> {
     return this.airgram.api.checkAuthenticationPassword({
       password: await this.ask('password')
     })
   }
 
-  private async fatalError (error: Error): Promise<false> {
+  private async fatalError(error: Error): Promise<false> {
     console.error(`[Airgram Auth] quit due an error: "${error.message}"`)
-    if (this.airgram.provider instanceof TdProvider) {
+    if (this.airgram.provider instanceof Provider) {
       await this.airgram.provider.destroy()
     }
     return false
   }
 
-  private async handleError (error: ErrorUnion): Promise<boolean> {
+  private async handleError(error: ErrorUnion): Promise<boolean> {
     let promise: Promise<ApiResponse<any, Ok>> | null = null
 
     if (error.code === 429) {
@@ -206,7 +206,7 @@ export class Auth {
       : true
   }
 
-  private async handleUpdateState ({ authorizationState }: UpdateAuthorizationState): Promise<boolean> {
+  private async handleUpdateState({ authorizationState }: UpdateAuthorizationState): Promise<boolean> {
     this.attempt = 0
     this.authState = authorizationState
     let promise: Promise<ApiResponse<any, Ok>> | null = null
@@ -258,7 +258,7 @@ export class Auth {
       : true
   }
 
-  private async login (): Promise<void> {
+  private async login(): Promise<void> {
     if (!this.deferred) {
       const deferred: Partial<LoginDeferred> = {}
       deferred.promise = new Promise<void>((resolve, reject) => {
@@ -274,7 +274,7 @@ export class Auth {
     return Promise.resolve(this.deferred ? this.deferred.promise : undefined)
   }
 
-  private async registerUser (): Promise<ApiResponse<RegisterUserParams, OkUnion>> {
+  private async registerUser(): Promise<ApiResponse<RegisterUserParams, OkUnion>> {
     const firstName = await this.ask('firstName')
     if (!firstName) {
       throw new Error('First name can not be empty.')
@@ -285,7 +285,7 @@ export class Auth {
     })
   }
 
-  private async sendCode (): Promise<ApiResponse<CheckAuthenticationCodeParams, OkUnion>> {
+  private async sendCode(): Promise<ApiResponse<CheckAuthenticationCodeParams, OkUnion>> {
     const code = await this.ask('code')
     if (!code || !/^\d+$/.test(code)) {
       throw new Error('Invalid authorization code')

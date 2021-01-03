@@ -33,7 +33,8 @@ const plugins = [
   new WorkerPlugin(),
   new CopyPlugin([
     {
-      from: path.resolve(__dirname, './node_modules/tdweb/dist/**/*'),
+      // from: path.resolve(__dirname, './node_modules/tdweb/dist/**/*'),
+      from: path.resolve(__dirname, './tdweb/dist/**/*'),
       to: '.',
       flatten: true,
       copyUnmodified: true,

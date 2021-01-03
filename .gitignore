@@ -103,8 +103,8 @@ $RECYCLE.BIN/
 lerna-debug.log
 npm-debug.log
 package-map.json
-dist
 tdlib
 db
 .env
 /packages/core/types
+/dist
