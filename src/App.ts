@@ -1,4 +1,4 @@
-import { Airgram } from '@airgram/web'
+import { Airgram } from './airgram'
 import { Auth } from './Auth' // We borrow the component only for demonstration purposes.
 import { apiHash, apiId, jsLogVerbosityLevel, logVerbosityLevel } from './config'
 
